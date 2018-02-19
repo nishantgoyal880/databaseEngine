@@ -154,14 +154,18 @@ public class MainClass {
 		}
 
 		//Selecting fields using sql query
-		System.out.println("\n");
-		for(int i=0;i<fields.size();i++) {
-			System.out.println(fields.get(i)+": ");
-			int j=listHead.indexOf(fields.get(i));
-			for(int k=j;k<list.size();k=k+17) {
-				if(k<list.size())
-					System.out.println(list.get(k));
-			}
+		try {
+			System.out.println("\n");
+			for(int i=0;i<fields.size();i++) {
+				System.out.println(fields.get(i)+": ");
+				int j=listHead.indexOf(fields.get(i));
+				for(int k=j;k<list.size();k=k+17) {
+					if(k<list.size())
+						System.out.println(list.get(k));
+					}
+				}
+		}catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println(e);
 		}
 	}
 
