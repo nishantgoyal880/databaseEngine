@@ -159,7 +159,8 @@ public class MainClass {
 			System.out.println(fields.get(i)+": ");
 			int j=listHead.indexOf(fields.get(i));
 			for(int k=j;k<list.size();k=k+17) {
-				System.out.println(list.get(k));
+				if(k<list.size())
+					System.out.println(list.get(k));
 			}
 		}
 	}
