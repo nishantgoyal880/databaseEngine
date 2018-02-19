@@ -77,9 +77,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		Scanner query=new Scanner(System.in);
-		input=query.nextLine();
-		query.close();
+		input="select city from ipl.csv";
 
 
 		//Splitting and displaying input into array of words
