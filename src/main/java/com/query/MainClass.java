@@ -12,6 +12,7 @@ public class MainClass {
 		String input;	//Query string from user
 		String tokens[]=null;	//parsed query string
 		QueryParameter para=new QueryParameter();	//object of calling class
+		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>();
 		
 
 		//Reading file and setting data types for integer and date
@@ -152,20 +153,30 @@ public class MainClass {
 				System.out.print((para.aggrString).get(i)+" ");
 			}
 		}
-
+		
 		//Selecting fields using sql query
 		try {
 			System.out.println("\n");
-			for(int i=0;i<fields.size();i++) {
-				System.out.println(fields.get(i)+": ");
+			for(int i=0;i<fields.size();i++) {	
+				ArrayList<String> s=new ArrayList<String>();
 				int j=listHead.indexOf(fields.get(i));
 				for(int k=j;k<list.size();k=k+17) {
-						System.out.println(list.get(k));
-					}
+					s.add(list.get(k));
+				}	
+				fieldResult.put(fields.get(i),s);
+			}
+			
+			for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
+				ArrayList<String> value = entry.getValue();
+				for(int i=0;i<value.size();i++) {
+					System.out.println(value.get(i));
 				}
+		    }
+			
 		}catch(ArrayIndexOutOfBoundsException e) {
 			System.out.println(e);
 		}
+		
 	}
 
 }

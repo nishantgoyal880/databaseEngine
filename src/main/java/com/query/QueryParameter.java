@@ -138,6 +138,5 @@ public class QueryParameter {
 		return grpString;
 	}	
 	
-	
 
 }
