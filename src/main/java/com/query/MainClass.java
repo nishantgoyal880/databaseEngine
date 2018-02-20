@@ -77,7 +77,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city from ipl.csv";
+		input="select city,id from ipl.csv";
 
 
 		//Splitting and displaying input into array of words
@@ -160,7 +160,6 @@ public class MainClass {
 				System.out.println(fields.get(i)+": ");
 				int j=listHead.indexOf(fields.get(i));
 				for(int k=j;k<list.size();k=k+17) {
-					if(k<list.size())
 						System.out.println(list.get(k));
 					}
 				}
