@@ -1,84 +1,28 @@
 package com.query;
 
-import java.io.*;
-import java.text.DateFormat;
 import java.util.*;
-import java.util.regex.Pattern;
-import java.text.SimpleDateFormat;
+import java.util.Map.Entry;
 
 public class MainClass {
+	
+	 
 	public static void main(String[] args) {
 
 		String input;	//Query string from user
 		String tokens[]=null;	//parsed query string
 		QueryParameter para=new QueryParameter();	//object of calling class
+		ConditionFilters obj=new ConditionFilters();
 		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>();
 		
 
 		//Reading file and setting data types for integer and date
-		BufferedReader br=null;
-		String line="";
-		ArrayList<String> list=new ArrayList<String>();
-		ArrayList<String> listHead=new ArrayList<String>();
-		int flag=0;
-
-		try {
-			br=new BufferedReader(new FileReader("ipl.csv"));
-			while ((line = br.readLine()) != null) {
-				if(flag==0) {
-					listHead.addAll(Arrays.asList(line.split(",")));
-					flag=1;
-				}else {
-					String spl[]=line.split(",");
-					if(spl.length==18) {
-						spl[14]=spl[14]+spl[15];
-						spl[15]=spl[16];
-						spl[16]=spl[17];
-					}
-					List<String> li=new ArrayList<String>();
-					li.addAll(Arrays.asList(spl));
-					if(li.size()==18) {
-						li.remove(17);
-					}
-					list.addAll(li);
-				}
-			}
-		}catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } finally {
-	        if (br != null) {
-	            try {
-	                br.close();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    }
-
-
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		for(int i=0;i<list.size();i++) {
-			if(Pattern.compile("[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])").matcher(list.get(i)).matches()) {
-				try {
-					df.parse(list.get(i));
-				}catch(Exception e) {
-					System.out.println(e);
-				}
-			}else if(Pattern.compile("\\d+").matcher(list.get(i)).matches()) {
-					Integer.valueOf(list.get(i));
-			}
-			 else {
-			}
-		}
-
-
+		para.read();
+		
 
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv";
+		input="select city,id,season,team2 from ipl.csv where id > 50 and city = hyderabad";
 
 
 		//Splitting and displaying input into array of words
@@ -98,7 +42,7 @@ public class MainClass {
 		for (int i=0; i<base.size(); i++) {
 		    System.out.print(base.get(i)+" ");
 		}
-
+		
 
 		//Displaying the filter part
 		ArrayList<String> filter=para.findFilter(tokens);
@@ -159,22 +103,31 @@ public class MainClass {
 			System.out.println("\n");
 			for(int i=0;i<fields.size();i++) {	
 				ArrayList<String> s=new ArrayList<String>();
-				int j=listHead.indexOf(fields.get(i));
-				for(int k=j;k<list.size();k=k+17) {
-					s.add(list.get(k));
+				int j=para.listHead.indexOf(fields.get(i));
+				for(int k=j;k<para.list.size();k=k+17) {
+					s.add(para.list.get(k));
 				}	
 				fieldResult.put(fields.get(i),s);
 			}
 			
-			for(int i=0;i<list.size()/17;i++) {
+			for(int i=0;i<para.list.size()/17;i++) {
 				for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
 					ArrayList<String> value = entry.getValue();
-					System.out.print(value.get(i)+" ");				
+					//System.out.print(value.get(i)+" ");				
 				}
-				System.out.println();
+				//System.out.println();
 			}
 		}catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println(e);
+			//System.out.println(e);
+		}
+		
+		//setting arraylist inside hashmap for each data line
+		obj.init();
+
+		for (Entry<Integer, ArrayList<String>> entry : obj.csvData.entrySet()) {
+            System.out.println("hello");
+			ArrayList<String> value = entry.getValue();
+			System.out.println(entry.getKey()+" "+value);				
 		}
 		
 	}

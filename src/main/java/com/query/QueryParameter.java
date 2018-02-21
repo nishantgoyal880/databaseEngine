@@ -1,6 +1,14 @@
 package com.query;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class QueryParameter {
@@ -16,6 +24,11 @@ public class QueryParameter {
 	ArrayList<String> aggrString=new ArrayList<String>();
 	String ordString;
 	String grpString;
+	
+	//variables of read function
+	ArrayList<String> list=new ArrayList<String>();
+	ArrayList<String> listHead=new ArrayList<String>();
+	
 	
 	//Splitting string into chunks
 	public String[] splitString(String input){
@@ -137,6 +150,70 @@ public class QueryParameter {
 		}
 		return grpString;
 	}	
+	
+	//Reading file and setting data types for integer and date
+	public void read() {
+		
+		BufferedReader br=null;
+		String line="";
+
+		int flag=0;
+
+		try {
+			br=new BufferedReader(new FileReader("ipl.csv"));
+			while ((line = br.readLine()) != null) {
+				if(flag==0) {
+					listHead.addAll(Arrays.asList(line.split(",")));
+					flag=1;
+				}else {
+					String spl[]=line.split(",");
+					if(spl.length==18) {
+						spl[14]=spl[14]+spl[15];
+						spl[15]=spl[16];
+						spl[16]=spl[17];
+					}
+					List<String> li=new ArrayList<String>();
+					li.addAll(Arrays.asList(spl));
+					if(li.size()==18) {
+						li.remove(17);
+					}
+					list.addAll(li);
+				}
+			}
+		}catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (br != null) {
+	            try {
+	                br.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		for(int i=0;i<list.size();i++) {
+			if(Pattern.compile("[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])").matcher(list.get(i)).matches()) {
+				try {
+					df.parse(list.get(i));
+				}catch(Exception e) {
+					System.out.println(e);
+				}
+			}else if(Pattern.compile("\\d+").matcher(list.get(i)).matches()) {
+					Integer.valueOf(list.get(i));
+			}
+			 else {
+			}
+		}
+
+
+
+
+	}
 	
 
 }
