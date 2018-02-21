@@ -78,7 +78,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id from ipl.csv";
+		input="select city,id,season,team2 from ipl.csv";
 
 
 		//Splitting and displaying input into array of words
@@ -166,13 +166,13 @@ public class MainClass {
 				fieldResult.put(fields.get(i),s);
 			}
 			
-			for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
-				ArrayList<String> value = entry.getValue();
-				for(int i=0;i<value.size();i++) {
-					System.out.println(value.get(i));
+			for(int i=0;i<list.size()/17;i++) {
+				for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
+					ArrayList<String> value = entry.getValue();
+					System.out.print(value.get(i)+" ");				
 				}
-		    }
-			
+				System.out.println();
+			}
 		}catch(ArrayIndexOutOfBoundsException e) {
 			System.out.println(e);
 		}
