@@ -59,6 +59,32 @@ public class ConditionFilters {
 						}
 						
 					}
+					if(flag==1) {
+						
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
+								
+							}else {
+								if(id.contains(j)) {
+									id.remove(j);
+								}
+							}
+						}
+						
+					}
+					
+					if(flag==2) {
+						
+
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
+								id.add(j);							
+							}
+						}
+						
+					}
 					
 				}else if(QueryParameter.splitInput[i].equals("=")){
 					

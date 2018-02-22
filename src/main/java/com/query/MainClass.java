@@ -22,7 +22,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv where city = Delhi ";
+		input="select city,id,season,team2 from ipl.csv where win_by_runs < 30 and id < 100  ";
 
 
 		//Splitting and displaying input into array of words
