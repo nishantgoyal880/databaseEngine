@@ -10,10 +10,10 @@ public class ConditionFilters {
 		HashMap<Integer, ArrayList<String>> csvData = new HashMap<Integer, ArrayList<String>>();
 		
 		void init() {
-			for(Integer i=0;i<(access.list).size()/17;i++) {
+			for(Integer i=0;i<(QueryParameter.list).size()/17;i++) {
 				ArrayList<String> s= new ArrayList<String>();
-				for(int j=17*i;j<access.list.size();) {
-					s.add(access.list.get(j));
+				for(int j=17*i;j<QueryParameter.list.size();) {
+					s.add(QueryParameter.list.get(j));
 					if(j==17*(i+1)) {
 						break;
 					}
