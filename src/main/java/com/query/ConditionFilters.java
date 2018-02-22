@@ -14,7 +14,7 @@ public class ConditionFilters {
 				ArrayList<String> s= new ArrayList<String>();
 				for(int j=16*i;j<access.list.size();j++) {
 					s.add(access.list.get(j));
-					if(j==16*(i+1)) {
+					if(j==17*(i+1)) {
 						break;
 					}
 				}
