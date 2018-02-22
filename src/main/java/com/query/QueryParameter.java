@@ -26,8 +26,8 @@ public class QueryParameter {
 	String grpString;
 	
 	//variables of read function
-	ArrayList<String> list=new ArrayList<String>();
-	ArrayList<String> listHead=new ArrayList<String>();
+	static ArrayList<String> list=new ArrayList<String>();
+	static ArrayList<String> listHead=new ArrayList<String>();
 	
 	
 	//Splitting string into chunks

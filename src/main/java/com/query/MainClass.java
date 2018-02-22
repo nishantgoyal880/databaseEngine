@@ -125,7 +125,6 @@ public class MainClass {
 		obj.init();
 
 		for (Entry<Integer, ArrayList<String>> entry : obj.csvData.entrySet()) {
-            System.out.println("hello");
 			ArrayList<String> value = entry.getValue();
 			System.out.println(entry.getKey()+" "+value);				
 		}
