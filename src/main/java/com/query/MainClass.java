@@ -22,7 +22,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv where id > 50 and city = hyderabad";
+		input="select city,id,season,team2 from ipl.csv where win_by_runs > 30 ";
 
 
 		//Splitting and displaying input into array of words
@@ -103,14 +103,14 @@ public class MainClass {
 			System.out.println("\n");
 			for(int i=0;i<fields.size();i++) {	
 				ArrayList<String> s=new ArrayList<String>();
-				int j=para.listHead.indexOf(fields.get(i));
-				for(int k=j;k<para.list.size();k=k+17) {
-					s.add(para.list.get(k));
+				int j=QueryParameter.listHead.indexOf(fields.get(i));
+				for(int k=j;k<QueryParameter.list.size();k=k+17) {
+					s.add(QueryParameter.list.get(k));
 				}	
 				fieldResult.put(fields.get(i),s);
 			}
 			
-			for(int i=0;i<para.list.size()/17;i++) {
+			for(int i=0;i<QueryParameter.list.size()/17;i++) {
 				for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
 					ArrayList<String> value = entry.getValue();
 					//System.out.print(value.get(i)+" ");				
@@ -126,8 +126,19 @@ public class MainClass {
 
 		for (Entry<Integer, ArrayList<String>> entry : obj.csvData.entrySet()) {
 			ArrayList<String> value = entry.getValue();
-			System.out.println(entry.getKey()+" "+value);				
+			//System.out.println(entry.getKey()+" "+value);				
 		}
+		
+		//displaying conditions
+		obj.condResult();
+		for(int j=0;j<ConditionFilters.id.size();j++) {
+			for(int i=0;i<QueryParameter.list.size()/17;i++) {
+				if(i==ConditionFilters.id.get(j)) {
+						System.out.println(obj.csvData.get(i+1));
+			
+				}
+			}
+		}	
 		
 	}
 

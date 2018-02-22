@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class QueryParameter {
 	
 
-	String splitInput[];
+	static String splitInput[];
 	String fileName;
 	ArrayList<String> baseString =new ArrayList<String>();
 	ArrayList<String> filterString=new ArrayList<String>();
