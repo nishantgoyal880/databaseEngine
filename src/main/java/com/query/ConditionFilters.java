@@ -20,7 +20,7 @@ public class ConditionFilters {
 					}
 					j++;
 				}
-				csvData.put(i+1,s);
+				csvData.put((i+1),s);
 			}
 		}
 		
@@ -61,13 +61,14 @@ public class ConditionFilters {
 					}
 					if(flag==1) {
 						
-						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+						for(int j=0;j<id.size();j++) {
 							
-							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*(id.get(j))))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
 								
 							}else {
-								if(id.contains(j)) {
-									id.remove(j);
+								if(id.contains(j+1)) {
+									System.out.println(j);
+									id.remove(j+1);
 								}
 							}
 						}
