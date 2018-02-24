@@ -20,7 +20,7 @@ public class ConditionFilters {
 					}
 					j++;
 				}
-				csvData.put((i+1),s);
+				csvData.put(i+1,s);
 			}
 		}
 		
@@ -45,6 +45,34 @@ public class ConditionFilters {
 						}
 					}
 					
+					if(flag==1) {
+						
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))>Integer.parseInt(QueryParameter.splitInput[i+1])) {
+								
+								if(id.contains(j)) {
+									//System.out.println(csvData.get(j+1));
+								}
+							
+							}
+						}
+						
+					}
+					
+					if(flag==2) {
+						
+
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))>Integer.parseInt(QueryParameter.splitInput[i+1])) {
+								id.add(j);							
+							}
+						}
+						
+					}
+					
+					
 				}else if(QueryParameter.splitInput[i].equals("<")){
 					
 					int ind=QueryParameter.listHead.indexOf(QueryParameter.splitInput[i-1]);
@@ -61,15 +89,14 @@ public class ConditionFilters {
 					}
 					if(flag==1) {
 						
-						for(int j=0;j<id.size();j++) {
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
 							
-							if(Integer.parseInt(QueryParameter.list.get(ind+17*(id.get(j))))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
+							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
 								
-							}else {
-								if(id.contains(j+1)) {
-									System.out.println(j);
-									id.remove(j+1);
+								if(id.contains(j)) {
+									//System.out.println(csvData.get(j+1));
 								}
+							
 							}
 						}
 						
@@ -104,7 +131,59 @@ public class ConditionFilters {
 							}catch(Exception e) {
 								
 								if(QueryParameter.list.get(ind+17*j).equals(QueryParameter.splitInput[i+1])){
+								
+									id.add(j);
 									
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+					if(flag==1) {
+						
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							try {
+								
+								if(Integer.parseInt(QueryParameter.list.get(ind+17*j))==Integer.parseInt(QueryParameter.splitInput[i+1])) {
+									if(id.contains(j)) {
+										//System.out.println(csvData.get(j+1));
+									}
+								}
+								
+							}catch(Exception e) {
+								
+								if(QueryParameter.list.get(ind+17*j).equals(QueryParameter.splitInput[i+1])){
+								
+									if(id.contains(j)) {
+										//System.out.println(csvData.get(j+1));
+									}
+									
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+					if(flag==2) {
+						
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							try {
+								
+								if(Integer.parseInt(QueryParameter.list.get(ind+17*j))==Integer.parseInt(QueryParameter.splitInput[i+1])) {
+									id.add(j);
+								}
+								
+							}catch(Exception e) {
+								
+								if(QueryParameter.list.get(ind+17*j).equals(QueryParameter.splitInput[i+1])){
+								
 									id.add(j);
 									
 								}
