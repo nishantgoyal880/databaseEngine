@@ -10,8 +10,8 @@ public class MainClass {
 
 		String input;	//Query string from user
 		String tokens[]=null;	//parsed query string
-		QueryParameter para=new QueryParameter();	//object of calling class
-		ConditionFilters obj=new ConditionFilters();
+		QueryParameter para=new QueryParameter();	//object of calling class upto goal 4
+		ConditionFilters obj=new ConditionFilters(); //object of calling class upto goal 5
 		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>();
 		
 
@@ -22,7 +22,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv where city = Bangalore or win_by_runs > 30 or season = 2015  ";
+		input="select city,id,season,team2 from ipl.csv where city = Bangalore and win_by_runs = 140 ";
 
 
 		//Splitting and displaying input into array of words

@@ -33,6 +33,7 @@ public class ConditionFilters {
 				
 				if(QueryParameter.splitInput[i].equals(">")) {
 					
+					ArrayList<Integer> temp =new ArrayList<Integer>();
 					int ind=QueryParameter.listHead.indexOf(QueryParameter.splitInput[i-1]);
 					
 					if(flag==0) {
@@ -51,10 +52,13 @@ public class ConditionFilters {
 							
 							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))>Integer.parseInt(QueryParameter.splitInput[i+1])) {
 								
-								if(id.contains(j)) {
+								if(!id.contains(j)) {
 									//System.out.println(csvData.get(j+1));
+									temp.add(j);
 								}
 							
+							}else {
+								temp.add(j);
 							}
 						}
 						
@@ -72,10 +76,12 @@ public class ConditionFilters {
 						
 					}
 					
+					id.removeAll(temp);
 					
 				}else if(QueryParameter.splitInput[i].equals("<")){
 					
 					int ind=QueryParameter.listHead.indexOf(QueryParameter.splitInput[i-1]);
+					ArrayList<Integer> temp =new ArrayList<Integer>();
 					
 					if(flag==0) {
 						
@@ -93,10 +99,13 @@ public class ConditionFilters {
 							
 							if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<Integer.parseInt(QueryParameter.splitInput[i+1])) {
 								
-								if(id.contains(j)) {
+								if(!id.contains(j)) {
 									//System.out.println(csvData.get(j+1));
+									temp.add(j);
 								}
 							
+							}else {
+								temp.add(j);
 							}
 						}
 						
@@ -114,9 +123,12 @@ public class ConditionFilters {
 						
 					}
 					
+					id.removeAll(temp);
+					
 				}else if(QueryParameter.splitInput[i].equals("=")){
 					
 					int ind=QueryParameter.listHead.indexOf(QueryParameter.splitInput[i-1]);
+					ArrayList<Integer> temp =new ArrayList<Integer>();
 					
 					if(flag==0) {
 						
@@ -149,9 +161,12 @@ public class ConditionFilters {
 							try {
 								
 								if(Integer.parseInt(QueryParameter.list.get(ind+17*j))==Integer.parseInt(QueryParameter.splitInput[i+1])) {
-									if(id.contains(j)) {
+									if(!id.contains(j)) {
 										//System.out.println(csvData.get(j+1));
+										temp.add(j);
 									}
+								}else {
+									temp.add(j);
 								}
 								
 							}catch(Exception e) {
@@ -160,8 +175,11 @@ public class ConditionFilters {
 								
 									if(id.contains(j)) {
 										//System.out.println(csvData.get(j+1));
+										temp.add(j);
 									}
 									
+								}else {
+									temp.add(j);
 								}
 								
 							}
@@ -193,6 +211,8 @@ public class ConditionFilters {
 						}
 						
 					}
+					
+					id.removeAll(temp);
 					
 				}else if(QueryParameter.splitInput[i].equals("and")) {
 					
