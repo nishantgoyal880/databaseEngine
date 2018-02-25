@@ -12,7 +12,7 @@ public class MainClass {
 		String tokens[]=null;	//parsed query string
 		QueryParameter para=new QueryParameter();	//object of calling class upto goal 4
 		ConditionFilters obj=new ConditionFilters(); //object of calling class upto goal 5
-		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>();
+		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>(); //Storing data of fields in query
 		
 
 		//Reading file and setting data types for integer and date
@@ -22,7 +22,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv where city = Bangalore and win_by_runs = 140 ";
+		input="select city,id,season,team2 from ipl.csv where city = Bangalore and win_by_runs > 30 and season > 2012 ";
 
 
 		//Splitting and displaying input into array of words
@@ -98,7 +98,7 @@ public class MainClass {
 			}
 		}
 		
-		//Selecting fields using sql query
+		//Selecting fields of sql query
 		try {
 			System.out.println("\n");
 			for(int i=0;i<fields.size();i++) {	
@@ -110,15 +110,8 @@ public class MainClass {
 				fieldResult.put(fields.get(i),s);
 			}
 			
-			for(int i=0;i<QueryParameter.list.size()/17;i++) {
-				for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
-					ArrayList<String> value = entry.getValue();
-					//System.out.print(value.get(i)+" ");				
-				}
-				//System.out.println();
-			}
 		}catch(ArrayIndexOutOfBoundsException e) {
-			//System.out.println(e);
+			System.out.println(e);
 		}
 		
 		//setting arraylist inside hashmap for each data line
@@ -129,16 +122,26 @@ public class MainClass {
 			//System.out.println(entry.getKey()+" "+value);				
 		}
 		
-		//displaying conditions
+		//displaying result from conditions
 		obj.condResult();
 		for(int j=0;j<ConditionFilters.id.size();j++) {
 			for(int i=0;i<QueryParameter.list.size()/17;i++) {
 				if(i==ConditionFilters.id.get(j)) {
 						System.out.println(obj.csvData.get(i+1));
-			
+						//In csvData index is starting from 1 
 				}
 			}
-		}	
+		}
+		
+		//Displaying fields of sql query
+		for(int i=0;i<ConditionFilters.id.size();i++) {
+			for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
+				ArrayList<String> value = entry.getValue();
+				System.out.print(value.get(ConditionFilters.id.get(i))+" ");
+				//Here index is starting from 0
+			}
+			System.out.println();
+		}
 		
 	}
 
