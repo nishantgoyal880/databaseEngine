@@ -1,7 +1,10 @@
 package com.query;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.Map.Entry;
+import org.json.simple.*;
 
 public class MainClass {
 	
@@ -13,6 +16,8 @@ public class MainClass {
 		QueryParameter para=new QueryParameter();	//object of calling class upto goal 4
 		ConditionFilters obj=new ConditionFilters(); //object of calling class upto goal 5
 		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>(); //Storing data of fields in query
+		JSONObject jsonFilter=new JSONObject();
+		StringWriter writer =new StringWriter();
 		
 
 		//Reading file and setting data types for integer and date
@@ -98,6 +103,7 @@ public class MainClass {
 			}
 		}
 		
+		
 		//Selecting fields of sql query
 		try {
 			System.out.println("\n");
@@ -114,6 +120,7 @@ public class MainClass {
 			System.out.println(e);
 		}
 		
+		
 		//setting arraylist inside hashmap for each data line
 		obj.init();
 
@@ -121,6 +128,7 @@ public class MainClass {
 			ArrayList<String> value = entry.getValue();
 			//System.out.println(entry.getKey()+" "+value);				
 		}
+		
 		
 		//displaying result from conditions
 		obj.condResult();
@@ -133,15 +141,32 @@ public class MainClass {
 			}
 		}
 		
+		
 		//Displaying fields of sql query
 		for(int i=0;i<ConditionFilters.id.size();i++) {
+			ArrayList<String> tmp=new ArrayList<String>();
 			for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
 				ArrayList<String> value = entry.getValue();
+				tmp.add(value.get(ConditionFilters.id.get(i)));
+				//JSONObject feeding
 				System.out.print(value.get(ConditionFilters.id.get(i))+" ");
 				//Here index is starting from 0
 			}
+			jsonFilter.put(i,tmp);
 			System.out.println();
 		}
+		
+		
+		//Displaying json String
+		try {
+			jsonFilter.writeJSONString(writer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String jsonString =writer.toString();
+		System.out.println(jsonString);
+		
 		
 	}
 
