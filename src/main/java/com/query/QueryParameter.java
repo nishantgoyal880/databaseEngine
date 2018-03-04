@@ -8,8 +8,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import org.json.simple.JSONObject;
 
 public class QueryParameter {
 	
@@ -24,6 +30,7 @@ public class QueryParameter {
 	ArrayList<String> aggrString=new ArrayList<String>();
 	String ordString;
 	String grpString;
+	static int index;//index for order by clause
 	
 	//variables of read function
 	static ArrayList<String> list=new ArrayList<String>();
@@ -210,10 +217,32 @@ public class QueryParameter {
 			}
 		}
 
-
-
-
 	}
+	
+	//applying order by clause
+
+	JSONObject sortL(Map<Integer,List<String>> sortList,int val) {
+		index=val;
+		List<HashMap.Entry<Integer,List<String>>> entries = new ArrayList<HashMap.Entry<Integer,List<String>>>(sortList.entrySet());
+
+        Collections.sort(entries, new Comparator<HashMap.Entry<Integer,List<String>>>() {
+            public int compare(HashMap.Entry<Integer,List<String>> l1, HashMap.Entry<Integer,List<String>> l2) {
+            	
+                return l1.getValue().get(index).compareTo(l2.getValue().get(index));
+            }
+        });
+        
+        JSONObject json=new JSONObject();
+        int i=0;
+        for (Map.Entry<Integer,List<String>> e : entries) {
+        	json.put(i,e.getValue());
+        	i++;	        
+        }
+        
+		return json;
+	}
+	
+	
 	
 
 }

@@ -16,9 +16,9 @@ public class MainClass {
 		QueryParameter para=new QueryParameter();	//object of calling class upto goal 4
 		ConditionFilters obj=new ConditionFilters(); //object of calling class upto goal 5
 		HashMap<String, ArrayList<String>> fieldResult = new HashMap<String, ArrayList<String>>(); //Storing data of fields in query
-		JSONObject jsonFilter=new JSONObject();
+		Map<Integer, List<String>> sortList = new HashMap<Integer, List<String>>();
 		StringWriter writer =new StringWriter();
-		
+		JSONObject jsonFilter =new JSONObject(); 
 
 		//Reading file and setting data types for integer and date
 		para.read();
@@ -27,7 +27,7 @@ public class MainClass {
 		System.out.println("Enter the query");
 
 		//Getting input from user
-		input="select city,id,season,team2 from ipl.csv where city = Bangalore and win_by_runs > 30 and season > 2012 ";
+		input="select win_by_runs,city,sum(win_by_runs),avg(win_by_runs),min(win_by_runs),max(win_by_runs),count(city) from ipl.csv where win_by_runs = 140  order by win_by_runs ";
 
 
 		//Splitting and displaying input into array of words
@@ -147,19 +147,37 @@ public class MainClass {
 			ArrayList<String> tmp=new ArrayList<String>();
 			for (Map.Entry<String, ArrayList<String>> entry : fieldResult.entrySet()) {
 				ArrayList<String> value = entry.getValue();
-				tmp.add(value.get(ConditionFilters.id.get(i)));
-				//JSONObject feeding
+				tmp.add(value.get(ConditionFilters.id.get(i)));	
 				System.out.print(value.get(ConditionFilters.id.get(i))+" ");
 				//Here index is starting from 0
 			}
-			jsonFilter.put(i,tmp);
+			sortList.put(i, tmp);
+			jsonFilter.put(i, tmp);
 			System.out.println();
 		}
 		
+		 
+		//sorting the elements i.e. order by
+		if(order!="") {
+			int ind=fields.indexOf(order);
+	    	JSONObject jsonFilterO=para.sortL(sortList,ind);
+	    	try {
+				jsonFilterO.writeJSONString(writer);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//Applying aggregate functions
+		String agrf[]=para.aggrString.toString().split("[\\s\\[\\],()+-]+");
+		obj.aggregateFun(agrf);
 		
 		//Displaying json String
 		try {
-			jsonFilter.writeJSONString(writer);
+			if(order=="") 
+				jsonFilter.writeJSONString(writer);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,6 +186,7 @@ public class MainClass {
 		System.out.println(jsonString);
 		
 		
+				
 	}
 
 }

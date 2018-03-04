@@ -9,6 +9,14 @@ public class ConditionFilters {
 		static ArrayList<Integer> id=new ArrayList<Integer>();
 		HashMap<Integer, ArrayList<String>> csvData = new HashMap<Integer, ArrayList<String>>();
 		
+		//variables for aggregate functions
+		static int avg;
+		static int sum;
+		static int count;
+		static int min;
+		static int max;
+		
+		
 		//making arraylist of every field
 		void init() {
 			for(Integer i=0;i<(QueryParameter.list).size()/17;i++) {
@@ -222,11 +230,105 @@ public class ConditionFilters {
 					
 					flag=2;
 					
+				}else if(QueryParameter.splitInput[i].equals("order")) {
+					
+					
+					
+					
+					
 				}else {
 					//System.out.println("all conditions resolved");
 				}
 			}
 		}
+		
+		//Applying aggregate functions
+		void aggregateFun(String aggrField[]) {
+			
+			for(int i=0;i<aggrField.length;i++) {
+				
+				if(aggrField[i].equals("avg")) {
+					
+					int ind=QueryParameter.listHead.indexOf(aggrField[i+1]);
+					
+					for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+						
+						avg+=Integer.parseInt(QueryParameter.list.get(ind+17*j));
+						
+					}
+					avg=avg/((QueryParameter.list).size()/17);
+					System.out.println("average = "+avg);
+					
+					
+				}else if (aggrField[i].equals("sum")){
+					
+                    int ind=QueryParameter.listHead.indexOf(aggrField[i+1]);
+					
+					for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+						
+						sum+=Integer.parseInt(QueryParameter.list.get(ind+17*j));
+						
+					}
+					System.out.println("sum = "+sum);
+					
+					
+				}else if (aggrField[i].equals("min")) {
+					
+					int ind=QueryParameter.listHead.indexOf(aggrField[i+1]);
+					
+					for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+						
+						if(Integer.parseInt(QueryParameter.list.get(ind+17*j))<min){
+							min=Integer.parseInt(QueryParameter.list.get(ind+17*j));
+						}
+						
+					}
+					System.out.println("Mininum = "+min);
+					
+				}else if(aggrField[i].equals("max")) {
+					
+					int ind=QueryParameter.listHead.indexOf(aggrField[i+1]);
+					
+					for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+						
+						if(max<Integer.parseInt(QueryParameter.list.get(ind+17*j))){
+							max=Integer.parseInt(QueryParameter.list.get(ind+17*j));
+						}
+						
+					}
+					System.out.println("Maximum = "+max);
+					
+				}else if(aggrField[i].equals("count")) {
+					
+					if(aggrField[i+1].equals("*")) {
+						
+						
+					}else {
+					    
+						int ind=QueryParameter.listHead.indexOf(aggrField[i+1]);
+						
+						for(int j=0;j<(QueryParameter.list).size()/17;j++) {
+							
+							if(QueryParameter.list.get(ind+17*j)!=null){
+								count++;
+							}
+							
+						}
+						System.out.println("Count = "+count);
+						
+					}
+					
+				}else {
+					
+				}
+				
+				
+				
+				
+			}
+			
+		}
+		
 		
 	}
 
